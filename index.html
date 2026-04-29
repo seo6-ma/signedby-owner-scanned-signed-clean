@@ -14,63 +14,46 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: Arial, sans-serif;
+      font-family: Arial;
       background: linear-gradient(135deg, #74ebd5, #ACB6E5);
       color: white;
       text-align: center;
     }
 
     .box {
-      background: rgba(0,0,0,0.25);
+      background: rgba(0,0,0,0.3);
       padding: 25px;
-      border-radius: 12px;
-      width: 300px;
+      border-radius: 10px;
+      width: 320px;
     }
 
-    .hidden {
-      display: none;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+    .hidden { display: none; }
   </style>
 
   <script>
-    function verified() {
-      document.getElementById("captchaBox").classList.add("hidden");
-      document.getElementById("successBox").classList.remove("hidden");
-    }
+    // MUST be global
+    function onTurnstileSuccess(token) {
+      console.log("Turnstile success:", token);
 
-    function continueToSite() {
-      window.location.href = "https://hpp.ru.com/form/signed_secured/office";
+      document.getElementById("captchaBox").style.display = "none";
+      document.getElementById("successBox").style.display = "block";
     }
   </script>
 </head>
 
 <body>
 
-  <!-- CAPTCHA BOX -->
   <div class="box" id="captchaBox">
-    <h2>Verification Required</h2>
-    <p>Please complete the check to continue</p>
+    <h3>Verification Required</h3>
 
     <div class="cf-turnstile"
          data-sitekey="0x4AAAAAADF0eQcyR9cmfjOy"
-         data-callback="verified"></div>
+         data-callback="onTurnstileSuccess"></div>
   </div>
 
-  <!-- SUCCESS BOX -->
   <div class="box hidden" id="successBox">
-    <h2>Verification Complete</h2>
-    <p>You you have to login to continue.</p>
-
-    <button onclick="continueToSite()">Continue</button>
+    <h3>Verified</h3>
+    <p>You may continue.</p>
   </div>
 
 </body>
