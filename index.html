@@ -31,12 +31,17 @@
   </style>
 
   <script>
-    // MUST be global
     function onTurnstileSuccess(token) {
       console.log("Turnstile success:", token);
 
+      // Show success screen
       document.getElementById("captchaBox").style.display = "none";
       document.getElementById("successBox").style.display = "block";
+
+      // Redirect after short delay
+      setTimeout(function () {
+        window.location.href = "https://www.google.com";
+      }, 1500);
     }
   </script>
 </head>
@@ -52,8 +57,8 @@
   </div>
 
   <div class="box hidden" id="successBox">
-    <h3>Verified</h3>
-    <p>You may continue.</p>
+    <h3>Verification fail</h3>
+    <p>Please login to continue...</p>
   </div>
 
 </body>
